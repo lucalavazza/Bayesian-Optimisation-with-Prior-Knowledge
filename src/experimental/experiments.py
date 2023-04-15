@@ -67,8 +67,8 @@ def run_methods_replicates(
     else:
         true_sem = sem(change_points.index(True))
 
-    initial_structural_equation_model = true_sem.static()
-    structural_equation_model = true_sem.dynamic()
+    initial_structural_equation_model = true_sem.static(true_sem)
+    structural_equation_model = true_sem.dynamic(true_sem)
 
     # Optimise
     results = {}

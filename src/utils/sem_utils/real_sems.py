@@ -207,3 +207,38 @@ class PredatorPreySEM:
         D = lambda e, t, s: self.m * (s["J"][t] + s["A"][t]) - self.delta * s["D"][t - 1]
 
         return OrderedDict([("M", M), ("N", N), ("P", P), ("J", J), ("A", A), ("E", E), ("D", D)])
+
+
+class EconSEM:
+    def __init__(self, functions_0, functions_t):
+        self.functions_0 = functions_0
+        self.functions_t = functions_t
+
+    @staticmethod
+    def static(self):
+    
+        F = lambda noise, time, sample: self.functions_0['F'].predict(time*np.ones((1,1)))[0]
+        X = lambda noise, time, sample: self.functions_0['X'].predict(time*np.ones((1,1)))[0]
+        Z = lambda noise, time, sample: self.functions_0['Z'].predict(np.transpose(np.vstack((sample['X'][time]
+                                                                                                *np.ones((1,1)), 
+                                                                                sample['F'][time]*np.ones((1,1))))))[0]
+        Y = lambda noise, time, sample: self.functions_0['Y'].predict(np.transpose(np.vstack((sample['X'][time]
+                                                                                                *np.ones((1,1)), 
+                                                                                sample['Z'][time]*np.ones((1,1))))))[0]
+        return OrderedDict([("F", F), ("X", X), ("Z", Z), ("Y", Y)])
+    
+    @staticmethod
+    def dynamic(self):
+        F = lambda noise, time, sample: self.functions_t['F'].predict(time*np.ones((1,1)))[0]
+        X = lambda noise, time, sample: self.functions_t['X'].predict(np.transpose(sample['X'][time-1]*
+                                                                                   np.ones((1,1))))[0]
+        Z = lambda noise, time, sample: self.functions_t['Z'].predict(np.transpose(np.vstack((sample['Z'][time-1]
+                                                                                              *np.ones((1,1)), 
+                                                                                sample['X'][time]*np.ones((1,1)), 
+                                                                                sample['F'][time]*np.ones((1,1))))))[0]
+        Y = lambda noise, time, sample: self.functions_t['Y'].predict(np.transpose(np.vstack((sample['Y'][time-1]
+                                                                                              *np.ones((1,1)), 
+                                                                                sample['Z'][time]*np.ones((1,1)),
+                                                                                sample['X'][time]*np.ones((1,1))))))[0]
+        return OrderedDict([("F", F), ("X", X), ("Z", Z), ("Y", Y)])
+

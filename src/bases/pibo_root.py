@@ -68,8 +68,8 @@ class Root:
             true_sem = sem(change_points.index(True))
 
         # These will be used in the target function evaluation
-        self.true_initial_sem = true_sem.static()  # for t = 0
-        self.true_sem = true_sem.dynamic()  # for t > 0
+        self.true_initial_sem = true_sem.static(true_sem)  # for t = 0
+        self.true_sem = true_sem.dynamic(true_sem)  # for t > 0
         self.make_sem_hat = make_sem_estimator
 
         assert isinstance(G, MultiDiGraph)

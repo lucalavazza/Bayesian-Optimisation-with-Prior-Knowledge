@@ -30,7 +30,7 @@ class PISHCAT_SEM:
 
 class StationaryDependentSEM:
     @staticmethod
-    def static():
+    def static(self):
 
         X = lambda noise, t, sample: noise
         Z = lambda noise, t, sample: np.exp(-sample["X"][t]) + noise
@@ -38,7 +38,7 @@ class StationaryDependentSEM:
         return OrderedDict([("X", X), ("Z", Z), ("Y", Y)])
 
     @staticmethod
-    def dynamic():
+    def dynamic(self):
 
         # We get temporal innovation by introducing transfer functions between temporal indices
         X = lambda noise, t, sample: sample["X"][t - 1] + noise
@@ -62,7 +62,7 @@ class LinearMultipleChildrenSEM:
     """
 
     @staticmethod
-    def static() -> OrderedDict:
+    def static(self) -> OrderedDict:
 
         X = lambda noise, t, sample: 1 + noise
         Z = lambda noise, t, sample: 2 * sample["X"][t] + noise
@@ -70,7 +70,7 @@ class LinearMultipleChildrenSEM:
         return OrderedDict([("X", X), ("Z", Z), ("Y", Y)])
 
     @staticmethod
-    def dynamic() -> OrderedDict:
+    def dynamic(self) -> OrderedDict:
 
         # We get temporal innovation by introducing transfer functions between temporal indices
         X = lambda noise, t, sample: sample["X"][t - 1] + 1 + noise
@@ -89,7 +89,7 @@ class StationaryDependentMultipleChildrenSEM:
     """
 
     @staticmethod
-    def static() -> OrderedDict:
+    def static(self) -> OrderedDict:
 
         X = lambda noise, t, sample: noise
         Z = lambda noise, t, sample: np.exp(-sample["X"][t]) + noise
@@ -102,7 +102,7 @@ class StationaryDependentMultipleChildrenSEM:
         return OrderedDict([("X", X), ("Z", Z), ("Y", Y)])
 
     @staticmethod
-    def dynamic() -> OrderedDict:
+    def dynamic(self) -> OrderedDict:
 
         # We get temporal innovation by introducing transfer functions between temporal indices
         X = lambda noise, t, sample: sample["X"][t - 1] + noise
@@ -119,7 +119,7 @@ class StationaryDependentMultipleChildrenSEM:
 
 class StationaryIndependentSEM:
     @staticmethod
-    def static():
+    def static(self):
         X = lambda noise, t, sample: noise
         Z = lambda noise, t, sample: noise
         Y = (
@@ -130,7 +130,7 @@ class StationaryIndependentSEM:
         return OrderedDict([("X", X), ("Z", Z), ("Y", Y)])
 
     @staticmethod
-    def dynamic():
+    def dynamic(self):
         X = lambda noise, t, sample: -sample["X"][t - 1] + noise
         Z = lambda noise, t, sample: -sample["Z"][t - 1] + noise
         Y = (
@@ -163,7 +163,7 @@ class NonStationaryDependentSEM:
         self.cp = change_point
 
     @staticmethod
-    def static():
+    def static(self):
         """
         noise: e
         sample: s
@@ -200,7 +200,7 @@ class NonStationaryIndependentSEM:
         self.change_point = change_point
 
     @staticmethod
-    def static():
+    def static(self):
         X = lambda noise, t, sample: noise
         Z = lambda noise, t, sample: noise
         Y = (
