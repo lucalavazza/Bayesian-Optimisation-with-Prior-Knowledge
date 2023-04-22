@@ -93,6 +93,7 @@ def compute_gap_values(T, summary):
     G_DCPIBO=0
     list_gaps=[]
     summary_list = list(summary.values())
+    # print(summary_list)
     for i in range(len(summary_list)):
         for t in range(T):
             # print(summary_list[i][t][0])
