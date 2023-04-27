@@ -76,9 +76,11 @@ def predict_optima_regret(iterations, time_steps, regret_priors, normalised_pdfs
         
         for time_step in range(time_steps):
             if(min(regret_priors[iteration][time_step])+max(regret_priors[iteration][time_step]))<0:
-                optimum = -min(np.multiply(regret_priors[iteration][time_step], normalised_pdfs[time_step]))
+                # optimum = abs(min(np.multiply(regret_priors[iteration][time_step], normalised_pdfs[time_step])))
+                optimum = (min(np.multiply(regret_priors[iteration][time_step], normalised_pdfs[time_step])))
             else:
-                optimum = -max(np.multiply(regret_priors[iteration][time_step], normalised_pdfs[time_step]))
+                # optimum = abs(max(np.multiply(regret_priors[iteration][time_step], normalised_pdfs[time_step])))
+                optimum = (max(np.multiply(regret_priors[iteration][time_step], normalised_pdfs[time_step])))
                               
             temp.append(optimum)
                               
