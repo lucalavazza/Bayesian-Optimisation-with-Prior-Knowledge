@@ -525,16 +525,17 @@ def plot_expected_opt_curve_paper(
         # Cost
         axs[time_index].set_xlabel(plot_params["xlabel"], fontsize=plot_params["size_labels"])
         axs[time_index].set_xlim(0, plot_params["xlim_max"])
-        if isinstance(ground_truth, dict):
-            axs[time_index].set_ylim(
-                ground_truth["DCBO"][time_index] - 0.2,
-                np.max(outcome[model][time_index][0] + outcome[model][time_index][1] + 0.3),
-            )
-        else:
-            if y_lim_list and time_index in y_lim_list:
-                axs[time_index].set_ylim(y_lim_list[time_index][0], y_lim_list[time_index][1])
-            else:
-                axs[time_index].set_ylim(ground_truth[time_index] - 1, np.max(out_all) + 1)
+        axs[time_index].set_ylim(2, 8)
+        # if isinstance(ground_truth, dict):
+        #     axs[time_index].set_ylim(
+        #         ground_truth["DCBO"][time_index] - 0.2,
+        #         np.max(outcome[model][time_index][0] + outcome[model][time_index][1] + 0.3),
+        #     )
+        # else:
+        #     if y_lim_list and time_index in y_lim_list:
+        #         axs[time_index].set_ylim(y_lim_list[time_index][0], y_lim_list[time_index][1])
+        #     else:
+        #         axs[time_index].set_ylim(ground_truth[time_index] - 1, np.max(out_all) + 1)
 
         axs[time_index].annotate(
             "$t = {}$".format(time_index),
